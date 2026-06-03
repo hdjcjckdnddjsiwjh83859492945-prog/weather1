@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Forecast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+  <script src="{{ url_for('static', path='app.js') }}" defer></script>
+</head>
+<body>
+  <main class="phone" id="app">
+    <section class="screen screen--home is-active" data-screen="home" aria-label="Current weather">
+      <div class="sky-layer" aria-hidden="true"></div>
+      <div class="home-header">
+        <button class="icon-button" data-action="refresh" type="button" aria-label="Refresh weather" title="Refresh">
+          <span data-icon="refresh"></span>
+        </button>
+        <p class="city-name" id="homeCity">Bryansk</p>
+        <button class="icon-button" data-action="open-search" type="button" aria-label="Search city" title="Search">
+          <span data-icon="search"></span>
+        </button>
+      </div>
+
+      <div class="temperature-block">
+        <h1><span id="currentTemp">--</span><span id="degreeSymbol">°</span></h1>
+        <p id="conditionLabel">Loading weather...</p>
+        <div class="hi-low">
+          <span><span id="highPrefix">H</span>:<strong id="dailyHigh">--°</strong></span>
+          <span><span id="lowPrefix">L</span>:<strong id="dailyLow">--°</strong></span>
+        </div>
+      </div>
+
+      <section class="glass-card hourly-card">
+        <p class="summary" id="summaryText">Weather data is loading.</p>
+        <div class="hourly-strip" id="hourlyList"></div>
+      </section>
+
+      <section class="glass-card forecast-card">
+        <p class="section-label" id="forecastTitle">10-day forecast</p>
+        <div class="forecast-list" id="forecastList"></div>
+      </section>
+    </section>
+
+    <section class="screen screen--search" data-screen="search" aria-label="City search">
+      <h2 id="searchTitle">Weather</h2>
+      <form class="search-form" id="searchForm">
+        <input id="cityInput" type="search" placeholder="Search for a city or airport" autocomplete="off">
+      </form>
+      <div class="city-list" id="cityList"></div>
+    </section>
+
+    <section class="screen screen--settings" data-screen="settings" aria-label="Settings">
+      <h2 id="settingsTitle">Settings</h2>
+      <div class="settings-list">
+        <label class="setting-row">
+          <span id="notificationsLabel">Notifications</span>
+          <input id="notificationsToggle" type="checkbox">
+          <i></i>
+        </label>
+        <button class="setting-row" data-action="toggle-language" type="button">
+          <span id="languageLabel">Language</span>
+          <strong id="languageValue">Eng</strong>
+        </button>
+        <div class="setting-row">
+          <span id="unitsLabel">Units</span>
+          <div class="segmented" role="group" aria-label="Temperature units">
+            <button data-unit="celsius" type="button">°C</button>
+            <button data-unit="fahrenheit" type="button">°F</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <span id="aboutLabel">About</span>
+          <small id="versionLabel">Version 1.0.0</small>
+        </div>
+        <button class="setting-row" data-action="toggle-theme" type="button">
+          <span id="themeLabel">Theme</span>
+          <strong id="themeValue">Black</strong>
+        </button>
+        <button class="setting-row" data-action="set-default-city" type="button">
+          <span id="defaultCityLabel">Default City</span>
+          <strong id="defaultCityValue">Bryansk</strong>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen screen--error" data-screen="error" aria-label="Network error">
+      <div class="network-mark" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <h2 id="errorTitle">Network error</h2>
+      <p id="errorText">It looks like you don't have a network.</p>
+      <button class="retry-button" id="retryButton" data-action="retry" type="button">Retry</button>
+    </section>
+
+    <nav class="tabbar" aria-label="Application navigation">
+      <button class="is-active" data-nav="home" type="button" aria-label="Home" title="Home"><span data-icon="home"></span></button>
+      <button data-nav="search" type="button" aria-label="Search" title="Search"><span data-icon="search"></span></button>
+      <button data-nav="settings" type="button" aria-label="Settings" title="Settings"><span data-icon="settings"></span></button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+</body>
+</html>
